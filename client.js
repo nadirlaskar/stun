@@ -17,7 +17,7 @@ var client = {
 var udp_in = dgram.createSocket('udp4');
 
 var getNetworkIP = function(callback) {
-  var socket = net.createConnection(80, rendezvous.address);
+  var socket = net.createConnection(4444, rendezvous.address);
   socket.on('connect', function() {
     callback(undefined, socket.address().address);
       socket.end();
@@ -44,7 +44,7 @@ var send = function(connection, msg, cb) {
 udp_in.on("listening", function() {
   var linfo = { port: udp_in.address().port };
   getNetworkIP(function(error, ip) {
-    if (error) return console.log("! Unable to obtain connection information!");
+    if (error) return console.log("! Unable to obtain connection information!",error);
     linfo.address = ip;
     console.log('# listening as %s@%s:%s', clientName, linfo.address, linfo.port);
     send(rendezvous, { type: 'register', name: clientName, linfo: linfo }, function() {

@@ -55,3 +55,11 @@ var send = function(host, port, msg, cb) {
 }
 
 udp_matchmaker.bind(udp_port);
+
+var http = require('http');
+var server = http.createServer(function (request, response) {
+response.writeHead(200);
+response.end("Hello World\n");
+});
+
+server.listen(4444);
